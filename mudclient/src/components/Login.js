@@ -7,9 +7,11 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            name: '',
-            race: 'human',
-            cls: 'fighter'
+            user: {
+                name: '',
+                race: 'human',
+                cls: 'marine'
+            }
         };
 
         this._handleLogin = this._onLogin.bind(this);
@@ -28,7 +30,7 @@ class Login extends Component {
                 <div className="col-sm-6 col-md-4">
                     <div className="card">
                         <div className="card-body">
-                            <h4 className="card-title">"Legacy of the Lambda Void" Game</h4>
+                            <h4 className="card-title">"Legacy of the Lambda Void" MUD Game</h4>
                             <form onSubmit={this._handleLogin}>
                                 <div className="form-group">
                                     <label htmlFor="characterName">Name</label>

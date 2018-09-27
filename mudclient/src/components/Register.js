@@ -11,34 +11,36 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            email: '',
-            password: ''
-        }
+            user: {
+                username: '',
+                email: '',
+                password: ''
+            }
+        };
     }
     componentWillReceiveProps(nextProps) {
         console.log("nextProps", nextProps);
     }
     handleClick(event, role) {
-        var apiBaseUrl = "http://localhost:3000/api/";
+        let apiBaseUrl = "http://localhost:3000/api/";
         // console.log("values in register handler",role);
-        var self = this;
+        let self = this;
         //To be done:check for empty values before hitting submit
-        if (this.state.first_name.length > 0 && this.state.last_name.length > 0 && this.state.email.length > 0 && this.state.password.length > 0) {
-            var payload = {
+        if (this.state.username.length > 0 && this.state.email.length > 0 && this.state.password.length > 0) {
+            let user = {
                 "username": this.state.username,
-                "userid": this.state.email,
-                "password": this.state.password,
+                "email": this.state.email,
+                "password": this.state.password1,
                 "role": role
             }
-            axios.post(apiBaseUrl + '/register', payload)
+            axios.post('https://lambdamud-app.herokuapp.com/api/registration', user)
                 .then(function (response) {
                     console.log(response);
                     if (response.data.code === 200) {
                         //  console.log("registration successfull");
-                        var loginscreen = [];
+                        let loginscreen = [];
                         loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role} />);
-                        var loginmessage = "Not Registered yet.Go to registration";
+                        let loginmessage = "Not Registered yet.Go to registration";
                         self.props.parentContext.setState({
                             loginscreen: loginscreen,
                             loginmessage: loginmessage,
