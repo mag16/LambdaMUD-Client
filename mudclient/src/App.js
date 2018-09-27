@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import Login from "./components/Login";
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-
+import Login from './components/Login';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this._handleLogin = this._onLogin.bind(this);
+  }
+
   render() {
     return (
-      
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </BrowserRouter>
-      
+      <div className="App container-fluid">
+        <Login handleLogin={this._handleLogin} />
+      </div>
     );
+  }
+
+  _onLogin(name, race, cls) {
   }
 }
 

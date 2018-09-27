@@ -1,62 +1,80 @@
-import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Login.css";
+import React, { Component } from 'react';
+import races from './races';
+import classes from './classes';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: "",
-            password: ""
+            name: '',
+            race: 'human',
+            cls: 'fighter'
         };
-    }
 
-    validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
+        this._handleLogin = this._onLogin.bind(this);
+        this._handleNameChange = this._onNameChange.bind(this);
+        this._handleRaceChange = this._onRaceChange.bind(this);
+        this._handleClassChange = this._onClassChange.bind(this);
     }
 
     render() {
+        const { name, race, cls } = this.state;
+        const racesOptions = races.map((race) => <option value={race.id}>{race.name}</option>);
+        const classesOptions = classes.map((cls) => <option value={cls.id}>{cls.name}</option>);
+
         return (
-            <div className="Login">
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
-                        <ControlLabel>Email</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
-                        <ControlLabel>Password</ControlLabel>
-                        <FormControl
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            type="password"
-                        />
-                    </FormGroup>
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-          </Button>
-                </form>
+            <div className="row justify-content-center">
+                <div className="col-sm-6 col-md-4">
+                    <div className="card">
+                        <div className="card-body">
+                            <h4 className="card-title">"Legacy of the Lambda Void" Game</h4>
+                            <form onSubmit={this._handleLogin}>
+                                <div className="form-group">
+                                    <label htmlFor="characterName">Name</label>
+                                    <input type="text" className="form-control" id="characterName" placeholder="Enter name" value={name} onChange={this._handleNameChange} />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="characterRace">Race</label>
+                                    <select id="characterRace" className="form-control" value={race} onChange={this._handleRaceChange}>
+                                        {racesOptions}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="characterClass">Class</label>
+                                    <select id="characterClass" className="form-control" value={cls} onChange={this._handleClassChange}>
+                                        {classesOptions}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <input type="submit" className="btn btn-primary" value="Join Room" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
+
+    _onLogin(e) {
+        const { name, race, cls } = this.state;
+        e.preventDefault();
+
+        this.props.handleLogin(name, race, cls);
+    }
+
+    _onNameChange(e) {
+        this.setState({ name: e.target.value });
+    }
+
+    _onRaceChange(e) {
+        this.setState({ race: e.target.value });
+    }
+
+    _onClassChange(e) {
+        this.setState({ cls: e.target.value });
+    }
 }
+
+export default Login;
