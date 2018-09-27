@@ -4,7 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
-import Login from './Login';
+
 
 
 class Register extends Component {
@@ -31,28 +31,20 @@ class Register extends Component {
                 "username": this.state.username,
                 "email": this.state.email,
                 "password": this.state.password1,
-                "role": role
-            }
+               
+            };
             axios.post('https://lambdamud-app.herokuapp.com/api/registration', user)
-                .then(function (response) {
+                .then(response => {
                     console.log(response);
                     if (response.data.code === 200) {
-                        //  console.log("registration successfull");
-                        let loginscreen = [];
-                        loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role} />);
-                        let loginmessage = "Not Registered yet.Go to registration";
-                        self.props.parentContext.setState({
-                            loginscreen: loginscreen,
-                            loginmessage: loginmessage,
-                            buttonLabel: "Register",
-                            isLogin: true
-                        });
+                        localStorage.setItem('token', response.data.key);
+                        this.props.history.push('/');
                     }
                     else {
-                        console.log("some error ocurred", response.data.code);
+                        console.log("some error ocurred", response.data.key);
                     }
                 })
-                .catch(function (error) {
+                .catch(error => {
                     console.log(error);
                 });
         }
