@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import Login from './components/Login';
+import { Route } from 'react-router-dom';
+import Register from './components/Register';
+
+
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +15,10 @@ class App extends Component {
   render() {
     return (
       <div className="App container-fluid">
-        <Login handleLogin={this._handleLogin} />
+        
+        <Route path='/login' component={Login} />
+        <Route path= '/Register' component={Register}/>
+
       </div>
     );
   }
