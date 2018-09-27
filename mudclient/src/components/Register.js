@@ -36,12 +36,13 @@ class Register extends Component {
             axios.post('https://lambdamud-app.herokuapp.com/api/registration', user)
                 .then(response => {
                     console.log(response);
+                    //if request received (200)
                     if (response.data.code === 200) {
                         localStorage.setItem('token', response.data.key);
                         this.props.history.push('/');
                     }
                     else {
-                        console.log("some error ocurred", response.data.key);
+                        console.log("error", response.data.key);
                     }
                 })
                 .catch(error => {

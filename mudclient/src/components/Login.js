@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import races from './races';
 import classes from './classes';
+import axios from 'axios';
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: {
+            
                 name: '',
                 race: 'human',
                 cls: 'marine'
-            }
+           
         };
 
         this._handleLogin = this._onLogin.bind(this);
@@ -19,6 +21,9 @@ class Login extends Component {
         this._handleRaceChange = this._onRaceChange.bind(this);
         this._handleClassChange = this._onClassChange.bind(this);
     }
+
+    
+          
 
     render() {
         const { name, race, cls } = this.state;
